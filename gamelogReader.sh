@@ -10,7 +10,7 @@ fi
 
 while read line; do
 
-if $( grep -q "${TRIGGER_STRING}" ); then
+if $( echo "${line}" | grep -q "${TRIGGER_STRING}" ); then
     curl -q "${API_URL}"
 fi
 
