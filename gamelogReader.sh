@@ -2,7 +2,7 @@
 
 LISTEN_DIR="/logdir/"
 LISTEN_FILTER="output_log__*"
-LISTEN_FILE=$(ls -r -1 ${LISTEN_DIR}/${LISTEN_FILTER}) | head -n1)
+LISTEN_FILE=$(ls -r -1 "${LISTEN_DIR}/${LISTEN_FILTER}") | head -n1)
 
 API_URL="https://example.com/api/v1337/pokeme?apikey=ubastard"
 TRIGGER_STRING="PlayerLogin:"
