@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LISTEN_FILE="./testdatastream"
+LISTEN_FILE=$(ls -r -1 $(dirname $(readlink -f ${0})) | head -n1)
 API_URL="https://example.com/api/v1337/pokeme?apikey=ubastard&username="
 TRIGGER_STRING="PlayerLogin:"
 
