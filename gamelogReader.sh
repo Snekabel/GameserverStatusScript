@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-LISTEN_DIR="/logdir/"
+LISTEN_DIR="7DaysToDieServer_Data"
 LISTEN_FILTER="output_log__*"
-LISTEN_FILE=$(ls -r -1 ${LISTEN_DIR}/${LISTEN_FILTER}) | head -n1)
+LISTEN_FILE=$(ls -r -1 ${LISTEN_DIR}/${LISTEN_FILTER} | head -n1)
+REGEX="(?<=PlayerLogin: )(.*)(?=\/)";
 
-API_URL="https://example.com/api/v1337/pokeme?apikey=ubastard"
-TRIGGER_STRING="PlayerLogin:"
+API_URL="http://example.com/api/"
 
 if [ "${1}" !=  "listen" ]; then
    tail -n0 -f "${LISTEN_FILE}" | bash ${0} listen
@@ -14,9 +14,9 @@ fi
 while read line; do
 
 if $( echo "${line}" | grep -q "${TRIGGER_STRING}" ); then
-    PLAYER_NAME=$(echo "${line}" | cut -d":" -f4- | rev | cut -d"/" -f2- | rev | cut -c2-)
+    PLAYER_NAME=$(echo "${line}" | grep -oP '(?<=PlayerLogin: )(.*)(?=\/)')
     echo "${PLAYER_NAME} Joined, Trigger curl"
-#   curl -q --data-urlencode "username=${PLAYER_NAME}" "${API_URL}"
+    curl -q --data-urlencode "username=${PLAYER_NAME}" "${API_URL}"
 fi
 
 done
