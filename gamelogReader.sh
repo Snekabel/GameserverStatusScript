@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-LISTEN_DIR="/home/steam/7days/7DaysToDieServer_Data"
-LISTEN_FILTER="output_log__*"
-LISTEN_FILE=$(ls -r -1 ${LISTEN_DIR}/${LISTEN_FILTER} | head -n1)
-PLAYER_JOIN_FILTER="(?<=Player ')(.*)(?=\' joined the game)"
-PLAYER_DISCONNECT_FILTER="(?<=Player ')(.*)(?=\' left the game)"
-GAME="7days to Die"
 
-API_URL="http://example.com/player"
+if [ -f ./config.cfg ]; then
+  . ./config.cfg
+else
+  echo "ERROR: $(pwd)/config.cfg not found"
+  exit 1
+fi
 
 echo "Listening to  ${LISTEN_FILE}"
 if [ "${1}" !=  "listen" ]; then
