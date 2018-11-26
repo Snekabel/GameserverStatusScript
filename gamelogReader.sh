@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-if [ -f ./config.cfg ]; then
-  . ./config.cfg
+if [ -f ${1} ]; then
+  . ${1}
 else
   echo "ERROR: $(pwd)/config.cfg not found"
   exit 1
 fi
 
 echo "Listening to  ${LISTEN_FILE}"
-if [ "${1}" !=  "listen" ]; then
-   tail -n0 -f "${LISTEN_FILE}" | bash ${0} listen
+if [ "${2}" !=  "listen" ]; then
+   tail -n0 -f "${LISTEN_FILE}" | bash ${0} ${1} listen
 fi
 
 while read line; do
