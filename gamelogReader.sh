@@ -2,8 +2,8 @@
 LISTEN_DIR="/home/steam/7days/7DaysToDieServer_Data"
 LISTEN_FILTER="output_log__*"
 LISTEN_FILE=$(ls -r -1 ${LISTEN_DIR}/${LISTEN_FILTER} | head -n1)
-PLAYER_JOIN_REGEX="(?<=Player ')(.*)(?=\' joined the game)"
-PLAYER_DISCONNECT_REGEX="(?<=Player ')(.*)(?=\' left the game)"
+PLAYER_JOIN_FILTER='grep -oP "(?<=Player ')(.*)(?=\' joined the game)"'
+PLAYER_DICONNECT_FILTER='grep -oP "(?<=Player ')(.*)(?=\' left the game)"'
 
 API_URL="http://example.com/player"
 
@@ -14,12 +14,12 @@ fi
 while read line; do
 
 #echo "${line}"
-if $( echo "${line}" | grep -qP "${PLAYER_JOIN_REGEX}" ); then
-    PLAYER_NAME=$(echo "${line}" | grep -oP "${PLAYER_JOIN_REGEX}")
+if $( echo "${line}" | grep -qP "${PLAYER_JOIN_FILTER}" ); then
+    PLAYER_NAME=$(echo "${line}" | ${PLAYER_JOIN_FILTER})
     echo "${PLAYER_NAME} Joined, Trigger curl"
     curl -q --data-urlencode "username=${PLAYER_NAME}" "${API_URL}Joined"
-elif $( echo "${line}" | grep -qP "${PLAYER_DISCONNECT_REGEX}" ); then
-    PLAYER_NAME=$(echo "${line}" | grep -oP "${PLAYER_DISCONNECT_REGEX}")
+elif $( echo "${line}" | ${PLAYER_DISCONNECT_FILTER} ); then
+    PLAYER_NAME=$(echo "${line}" | ${PLAYER_DISCONNECT_FILTER})
     echo "${PLAYER_NAME} Disconnected, Trigger curl"
     curl -q --data-urlencode "username=${PLAYER_NAME}" "${API_URL}Disconnected"
 fi
