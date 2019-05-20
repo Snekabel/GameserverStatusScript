@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+LISTEN_DIR="/home/steam/factorio"
+LISTEN_FILTER="logfile.log"
+LISTEN_FILE=$(ls -r -1 ${LISTEN_DIR}/${LISTEN_FILTER} | head -n1)
+PLAYER_JOIN_FILTER="(?<=\[JOIN\] )(.*)(?=\ joined the game)"
+PLAYER_DISCONNECT_FILTER="(?<=\[LEAVE\] )(.*)(?=\ left the game)"
+GAME="Factorio"
+
+API_URL="http://10.0.4.2:3001/api/v1/gameserver/player"

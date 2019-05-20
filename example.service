@@ -1,0 +1,14 @@
+# /etc/systemd/system/factorio_logreader.service
+[Unit]
+Description=Factorio Logreader
+PartOf=factorio.target
+
+[Service]
+User=steam
+Type=simple
+ExecStart=/home/steam/GameserverStatusScript/gamelogReader.sh /home/steam/factorio/config.cnf
+Restart=on-failure
+KillSignal=SIGINT
+
+[Install]
+WantedBy=factorio.target
