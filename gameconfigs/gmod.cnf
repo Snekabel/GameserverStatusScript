@@ -1,0 +1,10 @@
+#!/bin/env bash
+LISTEN_DIR="/home/steam/gmod/garrysmod/logs"
+LISTEN_FILTER="*"
+LISTEN_FILE=$(ls -r -1 ${LISTEN_DIR}/${LISTEN_FILTER} | head -n1)
+PLAYER_JOIN_FILTER="(?<=: \")(.*)(?=<[0-9]><STEAM_0:0:[0-9]{8}><>\" entered the game)"
+PLAYER_DISCONNECT_FILTER="(?<=: \")(.*)(?=<[0-9]><STEAM_0:0:[0-9]{8}><>\" disconnected)"
+GAME="Garrys Mod"
+
+API_URL="http://10.0.4.2:3001/api/v1/gameserver/player"
+

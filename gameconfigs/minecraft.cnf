@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+LISTEN_DIR="/home/steam/minecraft/logs"
+LISTEN_FILTER="latest.log"
+LISTEN_FILE=$(ls -r -1 ${LISTEN_DIR}/${LISTEN_FILTER} | head -n1)
+PLAYER_JOIN_FILTER="(?<=\[Server thread\/INFO\]\: )(.*)(?=\ joined the game)"
+PLAYER_DISCONNECT_FILTER="(?<=\[Server thread\/INFO\]\: )(.*)(?=\ left the game)"
+GAME="Minecraft"
+
+API_URL="http://10.0.4.2:3001/api/v1/gameserver/player"
+
+echo "Config loaded"
